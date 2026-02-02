@@ -1,0 +1,226 @@
+% !TeX TS-program = xelatex
+\documentclass[aspectratio=169, 12pt, xcolor=table]{beamer}
+\usefonttheme{professionalfonts}
+\usefonttheme{serif}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec-xetex}
+
+\usepackage{tikz}
+
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{subcaption}
+
+\usetikzlibrary{shapes.geometric, arrows}
+
+\setmainfont{Lato}
+
+%\PassOptionsToPackage[more=table]{xcolor}
+
+% Local configuration
+\renewcommand{\figurename}{}
+\DeclareCaptionFormat{custom}
+{%
+	\tiny #3
+}
+\captionsetup{format=custom}
+
+% Title stuff
+\title{Games Technologies}
+\subtitle{Introduction to C\#}
+\date{Week 01}
+\author{Vassilis Markos, Mediterranean College}
+
+\usetheme{streamline}
+
+% Local Commands
+\newcommand{\ohref}[1]{\href{#1}{\texttt{#1}}}
+\newcommand{\listindex}[2]{{\underset{#1}{\small #2}}}
+
+% Code listings
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Tikz style
+
+\tikzstyle{startstop} = [ellipse, rounded corners, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{process} = [rectangle, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{decision} = [diamond, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\tikzstyle{simple node} = [rectangle, draw=black, minimum width = 0.8cm, minimum height = 0.6cm]
+
+% makeatletter stuff
+
+\makeatletter
+\newcommand{\arabicthree}[1]{\expandafter\@arabicthree\csname c@#1\endcsname}
+\newcommand{\@arabicthree}[1]{\ifnum #1<100 0\fi\ifnum #1<10 0\fi\number#1}
+\makeatother
+
+\newcounter{exno}
+\setcounter{exno}{0}
+
+\newcommand{\exno}{\stepcounter{exno}In--class Exercise \#\arabicthree{exno}}
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}{Contents}
+		\tableofcontents
+	\end{frame}
+	
+	\section{Key C\# Constructs}\label{sec:key-cshar-constructs}
+	
+	\sectionframe
+		
+	\begin{frame}{Hello, World!}
+		\lstinputlisting[language=C++]{../source/helloWorld.cs}
+	\end{frame}
+
+	\begin{frame}{The Anatomy of a C\# Program}
+		\begin{itemize}
+			\item C\# tends to be more verbose than Python in most cases.
+			\item To begin with, everything should be wrapped in \texttt{namespace}s, i.e., collections of entities that are conceptually grouped together.
+			\item Then, almost everything lives within a class, much like Java and other object-oriented languages.
+			\item Finally, each project should have a single \textbf{main entry point}, which is a function called \texttt{Main()} which is typically typed as \texttt{static} and \texttt{void} (more on that soon\ldots).
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Static Typing}
+		\begin{adjustbox}{width=1.3\textwidth}
+			\lstinputlisting[language=C++]{../source/staticTyping.cs}
+		\end{adjustbox}
+	\end{frame}
+
+	\begin{frame}{Static Typing}
+		\begin{itemize}
+			\item In Python, variables are really flexible, being capable of pointing to virtually any language construct.
+			\item In C\#, things are a bit more strict, inheriting some C-style semantics.
+			\item Variable types have to be declared explicitly upon variable declaration, determining the size in memory a variable occupies and some other things under the hood.
+			\item One can use the wildcard \texttt{var} to let the compiler guess, which, in general, is not a good idea, and should be avoided as much as possible.
+			\begin{itemize}
+				\item However, it is quite convenient to have a third party badly documented API endpoint cast this way\ldots
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Flow Control}
+		\begin{adjustbox}{width=0.7\textwidth}
+			\lstinputlisting[language=C++]{../source/flowControl.cs}
+		\end{adjustbox}
+	\end{frame}
+	
+	\begin{frame}{Flow Control}
+		\begin{itemize}
+			\item Besides, syntax, the same common flow control constructs can be used in C\#.
+			\item \textbf{Beware:} \texttt{else if}, not \texttt{elif}!
+			\item Also, deriving from C-style syntax, the logic operators are:
+			\begin{itemize}
+				\item \texttt{and}: \texttt{\&\&}
+				\item \texttt{or}: \texttt{||}
+				\item \texttt{not}: \texttt{!}
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{While Loops}
+		\begin{adjustbox}{width=0.7\textwidth}
+			\lstinputlisting[language=C++]{../source/whileLoop.cs}
+		\end{adjustbox}
+	\end{frame}
+
+	\begin{frame}{For Loops}
+		\begin{adjustbox}{width=1.55\textwidth}
+			\lstinputlisting[language=C++]{../source/forLoop.cs}
+		\end{adjustbox}
+	\end{frame}
+
+	\begin{frame}{Functions}
+		\begin{adjustbox}{width=0.65\textwidth}
+			\lstinputlisting[language=C++]{../source/function.cs}
+		\end{adjustbox}
+	\end{frame}
+
+	\begin{frame}{Function Signatures}
+		\begin{itemize}
+			\item In contrast to Python, a function is not identified solely by its name.
+			\item In C\#, each function has its unique function signature, which comprises of:
+			\begin{itemize}
+				\item its name;
+				\item its number and type(s) of arguments;
+				\item its return type.
+			\end{itemize}
+			\item So, you can define two functions with the same name, but at least one of the above attributes being different.
+			\item This allow for the so-called \textbf{function overloading} (more on that soon).
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Common Data Structures}
+		\begin{adjustbox}{width=\textwidth}
+			\lstinputlisting[language=C++]{../source/dataStructures.cs}
+		\end{adjustbox}
+	\end{frame}
+	
+	\section{Fun Time!}\label{sec:fun-time}
+	
+	\sectionframe
+	
+	\setcounter{exno}{0}
+	
+	\begin{frame}[fragile]{\exno}
+		Make all transcriptions from Python to C\# found in:
+		\begin{center}
+			\texttt{lab/transcriptions.pdf}
+		\end{center}
+		Use any only resources you might find useful.
+	\end{frame}
+	
+	\begin{frame}{Homework}
+		Complete any incomplete lab exercises and then proceed to complete any missing parts of the game lab discussed in class today.
+	\end{frame}
+	
+	\begin{frame}{Any Questions?}
+		\begin{minipage}{0.35\textwidth}
+			\raggedright
+			Do not forget to fill in the questionnaire shown right!
+		\end{minipage}\hfill
+		\begin{minipage}{0.58\textwidth}
+			\vspace{0pt}
+			\raggedleft
+			\includegraphics[scale=0.4]{../../assets/post_lesson_assessment.png}
+			\centering
+			\ohref{https://forms.gle/dKSrmE1VRVWqxBGZA}
+		\end{minipage}
+	\end{frame}
+	
+\end{document}
