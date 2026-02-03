@@ -1,0 +1,15 @@
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\bin\Debug\net8.0\W01_in_class.exe
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\bin\Debug\net8.0\W01_in_class.deps.json
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\bin\Debug\net8.0\W01_in_class.runtimeconfig.json
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\bin\Debug\net8.0\W01_in_class.dll
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\bin\Debug\net8.0\W01_in_class.pdb
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\obj\Debug\net8.0\W01_in_class.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\obj\Debug\net8.0\W01_in_class.AssemblyInfoInputs.cache
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\obj\Debug\net8.0\W01_in_class.AssemblyInfo.cs
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\obj\Debug\net8.0\W01_in_class.csproj.CoreCompileInputs.cache
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\obj\Debug\net8.0\W01_in_class.sourcelink.json
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\obj\Debug\net8.0\W01_in_class.dll
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\obj\Debug\net8.0\refint\W01_in_class.dll
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\obj\Debug\net8.0\W01_in_class.pdb
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\obj\Debug\net8.0\W01_in_class.genruntimeconfig.cache
+C:\Users\MC\Documents\Courses\Game Technologies\Week 01 - Introduction to C#\in-class\W01_in_class\W01_in_class\obj\Debug\net8.0\ref\W01_in_class.dll
