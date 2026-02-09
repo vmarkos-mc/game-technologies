@@ -1,0 +1,64 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codeblue}{rgb}{0,0,0.5}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+
+\lstset{
+	basicstyle=\ttfamily\small,
+	breaklines=true,
+	frame=single,
+	rulecolor=\color{codegray},
+	numbers=left,
+	numberstyle=\tiny\color{codegray}
+}
+
+\title{C\# Lab: Transferring your Python Knowledge}
+\author{\small V. Markos}
+\date{}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section*{Instructions}
+	Translate the following Python functions into idiomatic C\#. Pay close attention to \textbf{types}, \textbf{access modifiers}, and \textbf{method naming conventions} (PascalCase).
+	
+	\subsection*{Task 1: Basic Multiplier}
+	\textbf{Python:}
+	\begin{lstlisting}[language=Python]
+def multiply_numbers(a, b):
+	return a * b
+	\end{lstlisting}
+	
+	\textbf{C\# Hint:} Think about whether the numbers should be \texttt{int}, \texttt{float}, or \texttt{double}.
+	
+	\subsection*{Task 2: List Filtering}
+	\textbf{Python:}
+	\begin{lstlisting}[language=Python]
+def get_long_names(name_list):
+	result = []
+	for name in name_list:
+		if len(name) > 5:
+			result.append(name)
+	return result
+	\end{lstlisting}
+	
+	\textbf{C\# Hint:} You will need \texttt{List<string>}. Try writing this with a \texttt{foreach} loop first, then see if you can use \texttt{LINQ} (\texttt{.Where()}).
+	
+
+	\subsection*{Task 3: Dictionary Search}
+	\textbf{Python:}
+	\begin{lstlisting}[language=Python]
+def get_user_age(user_dict, name):
+	if name in user_dict:
+		return f"{name} is {user_dict[name]} years old"
+	return "User not found"
+	\end{lstlisting}
+	
+	\textbf{C\# Hint:} Use \texttt{Dictionary<string, int>}. Remember string interpolation starts with \texttt{\$}.
+	
+\end{document}
