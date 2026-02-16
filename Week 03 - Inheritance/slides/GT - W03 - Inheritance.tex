@@ -1,0 +1,230 @@
+% !TeX TS-program = xelatex
+\documentclass[aspectratio=169, 12pt, xcolor=table]{beamer}
+\usefonttheme{professionalfonts}
+\usefonttheme{serif}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec-xetex}
+
+\usepackage{tikz}
+
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{subcaption}
+
+\usetikzlibrary{shapes.geometric, arrows}
+
+\setmainfont{Lato}
+
+%\PassOptionsToPackage[more=table]{xcolor}
+
+% Local configuration
+\renewcommand{\figurename}{}
+\DeclareCaptionFormat{custom}
+{%
+	\tiny #3
+}
+\captionsetup{format=custom}
+
+% Title stuff
+\title{Games Technologies}
+\subtitle{Inheritance}
+\date{Week 03}
+\author{Vassilis Markos, Mediterranean College}
+
+\usetheme{streamline}
+
+% Local Commands
+\newcommand{\ohref}[1]{\href{#1}{\texttt{#1}}}
+\newcommand{\listindex}[2]{{\underset{#1}{\small #2}}}
+
+% Code listings
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Tikz style
+
+\tikzstyle{startstop} = [ellipse, rounded corners, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{process} = [rectangle, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{decision} = [diamond, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\tikzstyle{simple node} = [rectangle, draw=black, minimum width = 0.8cm, minimum height = 0.6cm]
+
+% makeatletter stuff
+
+\makeatletter
+\newcommand{\arabicthree}[1]{\expandafter\@arabicthree\csname c@#1\endcsname}
+\newcommand{\@arabicthree}[1]{\ifnum #1<100 0\fi\ifnum #1<10 0\fi\number#1}
+\makeatother
+
+\newcounter{exno}
+\setcounter{exno}{0}
+
+\newcommand{\exno}{\stepcounter{exno}In--class Exercise \#\arabicthree{exno}}
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}{Contents}
+		\tableofcontents
+	\end{frame}
+	
+	\section{Inheritance}\label{sec:inheritance}
+	
+	\sectionframe
+	
+	\begin{frame}{On Animals}
+		\begin{itemize}[<+->]
+			\item Last time, we explored some simple Animal functionality, all wrapped in an \texttt{Animal} class.
+			\begin{itemize}[<+->]
+				\item As always, any code mentioned here lives in the \texttt{source} directory, in particular, in \texttt{Animal.cs}.
+			\end{itemize}
+			\item But, ``animal'' is a quite generic term, since various animals have different properties that distinguish them from others.
+			\item For instance, many animals do ``talk'' in some sense, but, well not in the same way.
+			\begin{itemize}[<+->]
+				\item Cats ``meow'', dogs ``woof'' and so on.
+				\item And some don't talk.
+			\end{itemize}
+			\item And, not to be forgotten, all animals share some characteristics too!
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{On Classes}
+		\begin{itemize}[<+->]
+			\item So, we need a way to compactly express all of these things in the OOP paradigm.
+			\item Evidently, a simple approach would be to define a single class for each animal we are interested in.
+			\item Can you see any problems here?
+			\begin{itemize}[<+->]
+				\item \emph{Redundancy,} to begin with.
+				\item Lack of semantic mapping of those concepts in our design is another.
+			\end{itemize}
+			\item In order to facilitate this sort of sharing some attributes / functionality but differentiating with respect to some other, OOP offers \textbf{Inheritance.}
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Examples Of Inheritance}
+		\lstinputlisting[linerange={55-63}, language=C++]{../source/Animal.cs}
+	\end{frame}
+
+	\begin{frame}{Examples Of Inheritance}
+		\lstinputlisting[linerange={1-6}, language=C++]{../source/Cat.cs}
+	\end{frame}
+
+	\begin{frame}{Examples Of Inheritance}
+		\lstinputlisting[linerange={8-14}, language=C++]{../source/Cat.cs}
+	\end{frame}
+	
+	\begin{frame}{Examples Of Inheritance}
+		\lstinputlisting[linerange={16-21}, language=C++]{../source/Cat.cs}
+		\begin{itemize}[<+->]
+			\item When it comes to overriding, we just need to define a child method with the same signature as the parent method.
+			\item The parent method has to be declared as \texttt{virtual}.
+			\item The child method has to be declared as \texttt{override}.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{A Simple Test Class}
+		\lstinputlisting[language=C++]{../source/Test.cs}
+	\end{frame}
+	
+	\begin{frame}{Stranger Things}
+		\lstinputlisting[language=C++]{../source/StrangeTest.cs}
+	\end{frame}
+
+	\begin{frame}{Types And Inheritance}
+		\begin{itemize}[<+->]
+			\item We can construct an object using a constructor of a child class and then assign it to a variable of a parent class.
+			\item This is perfectly okay, and in many cases useful (examples to come soon).
+			\item However, since the object has been constructed with some child constructor, it is considered an object of type \texttt{child} and not \texttt{parent}.
+			\item Thus, above, in both cases, the two instances use the overriden version of the \texttt{Talk()} method.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Dogs}
+		\lstinputlisting[language=C++]{../source/Dog.cs}
+	\end{frame}
+
+	\begin{frame}{Animal Structures}
+		\lstinputlisting[language=C++, basicstyle={\ttfamily\scriptsize}]{../source/AnimalStructures.cs}
+	\end{frame}
+
+	\begin{frame}{Types And Inheritance (Again)}
+		\begin{itemize}[<+->]
+			\item Using inheritance one can simulate a higher level behaviour found, e.g., in Python, where a data structure can contain elements of different type.
+			\item This is naturally restricted to elements of some common ancestor type, in our case \texttt{Animal}.
+			\item However, this is enough in most cases to allow for significant code simplifications, while still maintaining the advantages of strong typing.
+			\item This is also useful in function / method signatures, in case one needs to handle multiple child types in a uniform way.
+		\end{itemize}
+	\end{frame}
+	
+	\section{Fun Time!}\label{sec:fun-time}
+	
+	\sectionframe
+	
+	\setcounter{exno}{0}
+	
+	\begin{frame}[fragile]{\exno}
+		Follow Lab instructions in
+		\begin{center}
+			\texttt{lab/Game\_Lab\_01.pdf}
+		\end{center}
+		Use any online resources you might find useful.
+	\end{frame}
+
+	\begin{frame}[fragile]{\exno}
+		Follow Lab instructions in
+		\begin{center}
+			\texttt{lab/Game\_Lab\_02.pdf}
+		\end{center}
+		Use any online resources you might find useful.
+	\end{frame}
+	
+	\begin{frame}{Homework}
+		Complete any incomplete lab exercises and then proceed to complete any missing parts of the game lab discussed in class today.
+	\end{frame}
+	
+	\begin{frame}{Any Questions?}
+		\begin{minipage}{0.35\textwidth}
+			\raggedright
+			Do not forget to fill in the questionnaire shown right!
+		\end{minipage}\hfill
+		\begin{minipage}{0.58\textwidth}
+			\vspace{0pt}
+			\raggedleft
+			\includegraphics[scale=0.4]{../../assets/post_lesson_assessment.png}
+			\centering
+			\ohref{https://forms.gle/dKSrmE1VRVWqxBGZA}
+		\end{minipage}
+	\end{frame}
+	
+\end{document}
