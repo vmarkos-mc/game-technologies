@@ -11,6 +11,7 @@ namespace Game_Lab_01
 		private Player player; // This declares an object of the class Player
         // HashSet is like Python's set.
         private HashSet<GridPoint> visited = new HashSet<GridPoint>();
+        private HashSet<GridPoint> relics = new HashSet<GridPoint>();
 
 		// General purpose grid constructor.
 		public GameGrid(int rows, int cols)
@@ -18,9 +19,10 @@ namespace Game_Lab_01
 			this.rows = rows;
 			this.cols = cols;
 			player = new Player(this.rows - 1, 0);
+            relics = GetRandomGridPoints(rows);
 		}
-
-		// Just a shorthand to create square game grids.
+           
+        // Just a shorthand to create square game grids.
 		public GameGrid(int rows) : this(rows, rows) { }
 
         // Get neighbours
@@ -49,6 +51,28 @@ namespace Game_Lab_01
 			if (p.GetX() == rows - 1) return p;
 			return new GridPoint(p.GetX() + 1, p.GetY());
 		}
+
+
+        private HashSet<GridPoint> GetRandomGridPoints(int N)
+        {
+            HashSet<GridPoint> points = new HashSet<GridPoint>();
+            // This is not uniformly random, so we should use something like reservoir sampling here.
+            while (points.Count < N)
+            {
+                GridPoint point = GetRandomGridPoint();
+                points.Add(point);
+            }
+            return points;
+        }
+
+        private GridPoint GetRandomGridPoint()
+        {
+            Random rng = new Random(); // This is a (pseudo)random number generator
+            int x = rng.Next(0, rows); // Random.Next() returns the next random number.
+            int y = rng.Next(0, cols);
+            GridPoint point = new GridPoint(x, y);
+            return point;
+        }
 
         // Move related utilities
 
@@ -99,7 +123,11 @@ namespace Game_Lab_01
 					} else if (visited.Contains(new GridPoint(i, j)))
                     {
                         gridString += ". "; // This means we have visited this cell
-                    } else
+                    } else if (relics.Contains(new GridPoint(i, j)))
+                    {
+                        gridString += "+ "; // Just for debugging purposes
+                    }
+                    else
                     {
                         gridString += "* "; // You might want to *not* print the empty character for j == cols - 1
                     }
