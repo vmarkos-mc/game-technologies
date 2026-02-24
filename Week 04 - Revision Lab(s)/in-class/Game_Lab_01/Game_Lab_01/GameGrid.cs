@@ -96,7 +96,7 @@ namespace Game_Lab_01
                         gridString += "* "; // You might want to *not* print the empty character for j == cols - 1
                     }
 				}
-				gridString += "\n";
+                if (i < rows - 1) gridString += "\n";
 			}
 			return gridString;
         }

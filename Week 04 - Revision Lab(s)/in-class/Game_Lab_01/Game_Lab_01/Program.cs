@@ -23,7 +23,7 @@ namespace Game_Lab_01
                  *  3. Move cursor to current player position, erase player,
                  *      move cursor to new player position, print player.
                  */
-                Console.WriteLine("\x1b[{0}A{1}", size + 2, grid);
+                Console.WriteLine("\x1b[{0}A\r{1}", size, grid);
             }
         }
 
@@ -40,14 +40,19 @@ namespace Game_Lab_01
             bool validDirection = false;
             while (!validDirection)
             {
-                Console.Write("Next move (wasd): ");
-                string moveString = Console.ReadLine();
+                //Console.Write("Next move (wasd): ");
+                // string moveString = Console.ReadLine();
+                //char moveString = (char) Console.Read(); // Works but leads to some UI bugs
+                // ConsoleKeyInfo stores information about the last key pressed by user.
+                // key.KeyChar corresponds to the character of that key (if it does exist).
+                ConsoleKeyInfo key = Console.ReadKey();
+                char moveChar = key.KeyChar;
                 try
                 {
-                    direction = GetMoveDirection(moveString);
+                    direction = GetMoveDirection(moveChar);
                     validDirection = true;
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch (ArgumentOutOfRangeException)
                 {
                     // Just ignore it
                 }
@@ -55,17 +60,17 @@ namespace Game_Lab_01
             return direction;
         }
 
-        public static GameGrid.MoveDirection GetMoveDirection(string moveString)
+        public static GameGrid.MoveDirection GetMoveDirection(char moveString)
         {
             switch (moveString)
             {
-                case "w":
+                case 'w':
                     return GameGrid.MoveDirection.Up; // No need for break here, since we return.
-                case "a":
+                case 'a':
                     return GameGrid.MoveDirection.Left;
-                case "s":
+                case 's':
                     return GameGrid.MoveDirection.Down;
-                case "d":
+                case 'd':
                     return GameGrid.MoveDirection.Right;
                 default:
                     throw new ArgumentOutOfRangeException("Invalid move option. Valid ones: 'w', 'a', 's', 'd'.");
