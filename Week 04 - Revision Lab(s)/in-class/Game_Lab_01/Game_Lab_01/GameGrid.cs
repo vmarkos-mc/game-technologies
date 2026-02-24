@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game_Lab_01
 {
@@ -8,6 +9,8 @@ namespace Game_Lab_01
 		internal int rows; // We need those to be visible to child classes
         internal int cols;
 		private Player player; // This declares an object of the class Player
+        // HashSet is like Python's set.
+        private HashSet<GridPoint> visited = new HashSet<GridPoint>();
 
 		// General purpose grid constructor.
 		public GameGrid(int rows, int cols)
@@ -54,6 +57,8 @@ namespace Game_Lab_01
         {
             // Get player's current location
             GridPoint playerLocation = player.GetLocation();
+            // `Add()` adds an element to a set only if it is not already there
+            visited.Add(playerLocation);
             GridPoint newPlayerLocation; // Just an object declaration
             switch (direction)
             {
@@ -91,8 +96,11 @@ namespace Game_Lab_01
 					if (player.IsAt(i, j))
 					{
 						gridString += $"{player} ";
-					} else
-					{
+					} else if (visited.Contains(new GridPoint(i, j)))
+                    {
+                        gridString += ". "; // This means we have visited this cell
+                    } else
+                    {
                         gridString += "* "; // You might want to *not* print the empty character for j == cols - 1
                     }
 				}
