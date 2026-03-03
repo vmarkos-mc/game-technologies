@@ -5,12 +5,12 @@ namespace Game_Lab_01
     class Player
     {
         private GridPoint location;
-        private int relicsCollected;
+        private Inventory inventory;
 
         public Player(int row, int col)
         {
             location = new GridPoint(row, col);
-            relicsCollected = 0;
+            inventory = new Inventory();
         }
 
         // Default constructor
@@ -19,13 +19,13 @@ namespace Game_Lab_01
         // Relics setters / getters
         public int GetRelicsCollected()
         {
-            return relicsCollected;
+            return inventory.Count();
         }
 
         // Update relics counter
-        public void CollectRelic()
+        public void CollectRelic(Artefact artefact)
         {
-            relicsCollected++;
+            inventory.Add(artefact);
         }
 
         // Object method that returns player location

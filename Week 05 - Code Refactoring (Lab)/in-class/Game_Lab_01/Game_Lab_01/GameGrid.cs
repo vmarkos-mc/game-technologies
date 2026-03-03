@@ -11,7 +11,7 @@ namespace Game_Lab_01
 		private Player player; // This declares an object of the class Player
         // HashSet is like Python's set.
         private HashSet<GridPoint> visited = new HashSet<GridPoint>();
-        private HashSet<GridPoint> relics = new HashSet<GridPoint>();
+        private HashSet<Artefact> relics = new HashSet<Artefact>();
 
 		// General purpose grid constructor.
 		public GameGrid(int rows, int cols)
@@ -53,16 +53,16 @@ namespace Game_Lab_01
 		}
 
 
-        private HashSet<GridPoint> GetRandomGridPoints(int N)
+        private HashSet<Artefact> GetRandomArtefacts(int N)
         {
-            HashSet<GridPoint> points = new HashSet<GridPoint>();
+            HashSet<Artefact> artefacts = new HashSet<Artefact>();
             // This is not uniformly random, so we should use something like reservoir sampling here.
-            while (points.Count < N)
+            while (artefacts.Count < N)
             {
-                GridPoint point = GetRandomGridPoint();
-                points.Add(point);
+                Artefact artefact = new Artefact(GetRandomGridPoint());
+                artefacts.Add(artefact);
             }
-            return points;
+            return artefacts;
         }
 
         private GridPoint GetRandomGridPoint()
@@ -103,7 +103,8 @@ namespace Game_Lab_01
             }
             player.SetLocation(newPlayerLocation);
             // If there is a relic there, collect it.
-            if (relics.Contains(newPlayerLocation)) player.CollectRelic();
+            // TODO: Use a Dict<GridPoint, Artefact> to store relics!
+            if (relics.Contains(new Artefact(newPlayerLocation))) player.CollectRelic();
             if (player.GetRelicsCollected() == relics.Count()) return true;
             return false;
             // Debugging

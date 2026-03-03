@@ -5,6 +5,8 @@ namespace Game_Lab_01
 {
     public class GameUI
     {
+        // More on the singleton pattern:
+        // https://refactoring.guru/design-patterns/singleton
         private Game game;
         private bool wrap;
         private int size;
