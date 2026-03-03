@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MC\\Documents\\Courses\\Game Technologies\\Week 04 - Revision Lab(s)\\in-class\\Game_Lab_01\\Game_Lab_01\\Game_Lab_01.csproj": {}
+    "C:\\Users\\MC\\Documents\\Courses\\Game Technologies\\Week 05 - Code Refactoring (Lab)\\in-class\\Game_Lab_01\\Game_Lab_01\\Game_Lab_01.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MC\\Documents\\Courses\\Game Technologies\\Week 04 - Revision Lab(s)\\in-class\\Game_Lab_01\\Game_Lab_01\\Game_Lab_01.csproj": {
+    "C:\\Users\\MC\\Documents\\Courses\\Game Technologies\\Week 05 - Code Refactoring (Lab)\\in-class\\Game_Lab_01\\Game_Lab_01\\Game_Lab_01.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MC\\Documents\\Courses\\Game Technologies\\Week 04 - Revision Lab(s)\\in-class\\Game_Lab_01\\Game_Lab_01\\Game_Lab_01.csproj",
+        "projectUniqueName": "C:\\Users\\MC\\Documents\\Courses\\Game Technologies\\Week 05 - Code Refactoring (Lab)\\in-class\\Game_Lab_01\\Game_Lab_01\\Game_Lab_01.csproj",
         "projectName": "Game_Lab_01",
-        "projectPath": "C:\\Users\\MC\\Documents\\Courses\\Game Technologies\\Week 04 - Revision Lab(s)\\in-class\\Game_Lab_01\\Game_Lab_01\\Game_Lab_01.csproj",
+        "projectPath": "C:\\Users\\MC\\Documents\\Courses\\Game Technologies\\Week 05 - Code Refactoring (Lab)\\in-class\\Game_Lab_01\\Game_Lab_01\\Game_Lab_01.csproj",
         "packagesPath": "C:\\Users\\MC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MC\\Documents\\Courses\\Game Technologies\\Week 04 - Revision Lab(s)\\in-class\\Game_Lab_01\\Game_Lab_01\\obj\\",
+        "outputPath": "C:\\Users\\MC\\Documents\\Courses\\Game Technologies\\Week 05 - Code Refactoring (Lab)\\in-class\\Game_Lab_01\\Game_Lab_01\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

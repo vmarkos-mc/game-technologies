@@ -5,14 +5,28 @@ namespace Game_Lab_01
     class Player
     {
         private GridPoint location;
+        private int relicsCollected;
 
         public Player(int row, int col)
         {
             location = new GridPoint(row, col);
+            relicsCollected = 0;
         }
 
         // Default constructor
         public Player() { }
+
+        // Relics setters / getters
+        public int GetRelicsCollected()
+        {
+            return relicsCollected;
+        }
+
+        // Update relics counter
+        public void CollectRelic()
+        {
+            relicsCollected++;
+        }
 
         // Object method that returns player location
         public GridPoint GetLocation()

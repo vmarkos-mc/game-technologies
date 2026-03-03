@@ -77,7 +77,7 @@ namespace Game_Lab_01
         // Move related utilities
 
         // Makes a move, if allowed, or throw an exception
-        public void MakeMove(MoveDirection direction)
+        public bool MakeMove(MoveDirection direction)
         {
             // Get player's current location
             GridPoint playerLocation = player.GetLocation();
@@ -102,6 +102,12 @@ namespace Game_Lab_01
                     throw new ArgumentOutOfRangeException("Invalid move option."); // In case we have been provided with an irrelevant value.
             }
             player.SetLocation(newPlayerLocation);
+            // If there is a relic there, collect it.
+            if (relics.Contains(newPlayerLocation)) player.CollectRelic();
+            if (player.GetRelicsCollected() == relics.Count()) return true;
+            return false;
+            // Debugging
+            // Console.WriteLine("Relics Collected: {0}", player.GetRelicsCollected());
         }
 
         // Local definition of possible move directions
@@ -123,9 +129,6 @@ namespace Game_Lab_01
 					} else if (visited.Contains(new GridPoint(i, j)))
                     {
                         gridString += ". "; // This means we have visited this cell
-                    } else if (relics.Contains(new GridPoint(i, j)))
-                    {
-                        gridString += "+ "; // Just for debugging purposes
                     }
                     else
                     {

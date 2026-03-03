@@ -10,10 +10,13 @@ namespace Game_Lab_01
             bool wrap = GetWrap();
             GameGrid grid = wrap ? new WrappingGameGrid(size) : new GameGrid(size);
             Console.WriteLine(grid);
-            while (true)
+            bool isGameOver = false;
+            int numberOfMoves = 0;
+            while (!isGameOver)
             {
                 GameGrid.MoveDirection direction = ParseMoveString();
-                grid.MakeMove(direction);
+                isGameOver = grid.MakeMove(direction);
+                numberOfMoves++;
                 /*
                  * Ideas to produce a grid that does not print over and over again:
                  *  1. Just print many (many) newlines.
@@ -25,6 +28,7 @@ namespace Game_Lab_01
                  */
                 Console.WriteLine("\x1b[{0}A\r{1}", size, grid);
             }
+            Console.WriteLine("You won in {0} moves!", numberOfMoves);
         }
 
         public static bool GetWrap()
