@@ -1,0 +1,215 @@
+% !TeX TS-program = xelatex
+\documentclass[aspectratio=169, 12pt, xcolor=table]{beamer}
+\usefonttheme{professionalfonts}
+\usefonttheme{serif}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec-xetex}
+
+\usepackage{tikz}
+
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{subcaption}
+
+\usetikzlibrary{shapes.geometric, arrows}
+
+\setmainfont{Lato}
+
+%\PassOptionsToPackage[more=table]{xcolor}
+
+% Local configuration
+\renewcommand{\figurename}{}
+\DeclareCaptionFormat{custom}
+{%
+	\tiny #3
+}
+\captionsetup{format=custom}
+
+% Title stuff
+\title{Games Technologies}
+\subtitle{Introduction to OOP}
+\date{Week 02}
+\author{Vassilis Markos, Mediterranean College}
+
+\usetheme{streamline}
+
+% Local Commands
+\newcommand{\ohref}[1]{\href{#1}{\texttt{#1}}}
+\newcommand{\listindex}[2]{{\underset{#1}{\small #2}}}
+
+% Code listings
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Tikz style
+
+\tikzstyle{startstop} = [ellipse, rounded corners, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{process} = [rectangle, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{decision} = [diamond, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\tikzstyle{simple node} = [rectangle, draw=black, minimum width = 0.8cm, minimum height = 0.6cm]
+
+% makeatletter stuff
+
+\makeatletter
+\newcommand{\arabicthree}[1]{\expandafter\@arabicthree\csname c@#1\endcsname}
+\newcommand{\@arabicthree}[1]{\ifnum #1<100 0\fi\ifnum #1<10 0\fi\number#1}
+\makeatother
+
+\newcounter{exno}
+\setcounter{exno}{0}
+
+\newcommand{\exno}{\stepcounter{exno}In--class Exercise \#\arabicthree{exno}}
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}{Contents}
+		\tableofcontents
+	\end{frame}
+	
+	\section{Object Oriented Programming}\label{sec:oop}
+	
+	\sectionframe
+	
+	\begin{frame}{Programmer Humour}
+		\begin{figure}
+			\includegraphics[width=0.75\textwidth]{assets/the_general_problem.png}
+			\caption{This might make more sense after this set of slides.}
+		\end{figure}
+	\end{frame}
+	
+	
+	\begin{frame}{What Is OOP?}
+		Object Oriented Programming, as per Wikipedia (\href{https://en.wikipedia.org/wiki/Object-oriented_programming}{https://en.wikipedia.org/wiki/Object-oriented\_programming}):
+		\begin{quote}
+			Object-oriented programming (OOP) is a programming paradigm based on objects -- software entities that encapsulate data and function(s). An OOP computer program consists of objects that interact with one another.
+		\end{quote}
+		So, technically, data bound to actions taken with / about those data.
+	\end{frame}
+
+	\begin{frame}{Why OOP?}
+		\begin{itemize}[<+->]
+			\item Most of the times, OOP saves up tons of LOC (lines of code).
+			\item In many cases, it is just natural to write in an OO way, since there is a clear mapping between the problem and classes / objects.
+			\item It (typically) makes code readable and easily extensible.
+			\item However, things come at a cost, especially in terms of a relatively steep learning curve.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{OOP in C\#}
+		\begin{itemize}[<+->]
+			\item In C\# the key OOP construct is the \texttt{class}.
+			\item You can think of classes as collections of:
+			\begin{itemize}[<+->]
+				\item tightly related data, alongside;
+				\item relevant functions that operate on / with those data.
+			\end{itemize}
+			\item But, an example might be worth a thousand words in this case\ldots
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{C\# Classes}
+		A C\# class consists of several sections:
+		\begin{itemize}[<+->]
+			\item The class fields, which correspond to the attributes of each object.
+			\item The class methods, which are just functions related to the objects themselves.
+			\item Typically, setters and getters for any private class fields.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Class Fields}
+		\lstinputlisting[linerange={1-9}, language=C++]{../source/Animal.cs}
+	\end{frame}
+
+	\begin{frame}{Instance Constructor}
+		\lstinputlisting[linerange={11-17}, language=C++]{../source/Animal.cs}
+	\end{frame}
+	
+	\begin{frame}{More Constructors}
+		\lstinputlisting[linerange={19-23}, language=C++]{../source/Animal.cs}
+	\end{frame}
+
+	\begin{frame}{Class Method}
+		\lstinputlisting[linerange={25-29}, language=C++]{../source/Animal.cs}
+	\end{frame}
+
+	\begin{frame}{Class Setters / Getters}
+		\resizebox{0.6\textwidth}{!}{
+			\lstinputlisting[linerange={31-46}, language=C++]{../source/Animal.cs}
+		}
+	\end{frame}
+
+	\begin{frame}{Method Overriding}
+		\lstinputlisting[linerange={48-51}, language=C++]{../source/Animal.cs}
+	\end{frame}
+
+	\begin{frame}{Main Entry Point}
+		\lstinputlisting[language=C++]{../source/Test.cs}
+	\end{frame}
+	
+	
+	\section{Fun Time!}\label{sec:fun-time}
+	
+	\sectionframe
+	
+	\setcounter{exno}{0}
+	
+	\begin{frame}[fragile]{\exno}
+		Follow Lab instructions in
+		\begin{center}
+			\texttt{lab/Game\_Lab\_01.pdf}
+		\end{center}
+		Use any only resources you might find useful.
+	\end{frame}
+	
+	\begin{frame}{Homework}
+		Complete any incomplete lab exercises and then proceed to complete any missing parts of the game lab discussed in class today.
+	\end{frame}
+	
+	\begin{frame}{Any Questions?}
+		\begin{minipage}{0.35\textwidth}
+			\raggedright
+			Do not forget to fill in the questionnaire shown right!
+		\end{minipage}\hfill
+		\begin{minipage}{0.58\textwidth}
+			\vspace{0pt}
+			\raggedleft
+			\includegraphics[scale=0.4]{../../assets/post_lesson_assessment.png}
+			\centering
+			\ohref{https://forms.gle/dKSrmE1VRVWqxBGZA}
+		\end{minipage}
+	\end{frame}
+	
+\end{document}
