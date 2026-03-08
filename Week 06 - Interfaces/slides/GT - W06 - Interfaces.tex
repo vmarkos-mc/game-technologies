@@ -1,0 +1,179 @@
+% !TeX TS-program = xelatex
+\documentclass[aspectratio=169, 12pt, xcolor=table]{beamer}
+\usefonttheme{professionalfonts}
+\usefonttheme{serif}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec-xetex}
+
+\usepackage{tikz}
+
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{subcaption}
+
+\usetikzlibrary{shapes.geometric, arrows}
+
+\setmainfont{Lato}
+
+%\PassOptionsToPackage[more=table]{xcolor}
+
+% Local configuration
+\renewcommand{\figurename}{}
+\DeclareCaptionFormat{custom}
+{%
+	\tiny #3
+}
+\captionsetup{format=custom}
+
+% Title stuff
+\title{Games Technologies}
+\subtitle{Interfaces}
+\date{Week 06}
+\author{Vassilis Markos, Mediterranean College}
+
+\usetheme{streamline}
+
+% Local Commands
+\newcommand{\ohref}[1]{\href{#1}{\texttt{#1}}}
+\newcommand{\listindex}[2]{{\underset{#1}{\small #2}}}
+
+% Code listings
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Tikz style
+
+\tikzstyle{startstop} = [ellipse, rounded corners, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{process} = [rectangle, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{decision} = [diamond, minimum width=2cm, minimum height=0.8cm, text centered, draw=black, fill=none]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\tikzstyle{simple node} = [rectangle, draw=black, minimum width = 0.8cm, minimum height = 0.6cm]
+
+% makeatletter stuff
+
+\makeatletter
+\newcommand{\arabicthree}[1]{\expandafter\@arabicthree\csname c@#1\endcsname}
+\newcommand{\@arabicthree}[1]{\ifnum #1<100 0\fi\ifnum #1<10 0\fi\number#1}
+\makeatother
+
+\newcounter{exno}
+\setcounter{exno}{0}
+
+\newcommand{\exno}{\stepcounter{exno}In--class Exercise \#\arabicthree{exno}}
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}{Contents}
+		\tableofcontents
+	\end{frame}
+	
+	\section{Interfaces}\label{sec:interfaces}
+	
+	\sectionframe
+	
+	\begin{frame}{Simultaneous Inheritance}
+		\begin{minipage}{0.65\textwidth}
+			\begin{itemize}
+				\item We have seen the example of an Animal class, with two child classes: Cat and Dog.
+				\item Being a cat parent since forever, I consider cats to be valid instances of housemates -- even if they do not contribute to housekeeping matters at all.
+				\item So, in my mind, Cats should also inherit from a ``Housemate'' class, as shown in the diagram on the side.
+			\end{itemize}
+		\end{minipage}\hfill%
+		\begin{minipage}{0.3\textwidth}
+			\begin{tikzpicture}[scale=0.85]
+				\node (animal) at (0,0) {Animal};
+				\node (housemate) at (3,0) {Housemate};
+				\node (cat) at (1,-2) {Cat};
+				\draw[->] (animal) -- (cat);
+				\draw[->] (housemate) -- (cat);
+			\end{tikzpicture}
+		\end{minipage}
+	\end{frame}
+	
+	
+	\begin{frame}{Simultaneous Inheritance in C\#}
+		\begin{itemize}
+			\item The catch is: Simultaneous inheritance in C\# is not a thing.
+			\begin{itemize}
+				\item This is also a trend in other OO languages like Java.
+			\end{itemize}
+			\item So, how are we going to implement such cases?
+			\item One approach mocking multiple inheritance is keep instances of parent classes as fields inside the child class.
+			\item But, as you might suspect, this goes against any OOP principle, in practice\footnote{However, this is a way to implement OO in languages that do not support it, like C.\\[1em]}.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{C\# Interfaces}
+		\begin{itemize}
+			\item One way to implement multiple inheritance in C\# is by using \textbf{Interfaces}.
+			\item Interfaces roughly serve the purpose of blueprints, much like abstract classes, describing what a class implementing that interface should comprise of.
+			\item As blueprints, Interfaces do not implement themselves any sort of functionality.
+			\item Instead, this is left to each class implementing the interface separately to do so.
+		\end{itemize}
+	\end{frame}
+	
+	\section{Fun Time!}\label{sec:fun-time}
+	
+	\sectionframe
+	
+	\setcounter{exno}{0}
+	
+	\begin{frame}[fragile]{\exno}
+		Follow Lab instructions in
+		\begin{center}
+			\texttt{lab/Game\_Lab\_03.pdf}
+		\end{center}
+		Use any only resources you might find useful.
+	\end{frame}
+	
+	\begin{frame}{Homework}
+		Complete any incomplete lab exercises and then proceed to complete any missing parts of the game lab discussed in class today.
+	\end{frame}
+	
+	\begin{frame}{Any Questions?}
+		\begin{minipage}{0.35\textwidth}
+			\raggedright
+			Do not forget to fill in the questionnaire shown right!
+		\end{minipage}\hfill
+		\begin{minipage}{0.58\textwidth}
+			\vspace{0pt}
+			\raggedleft
+			\includegraphics[scale=0.4]{../../assets/post_lesson_assessment.png}
+			\centering
+			\ohref{https://forms.gle/dKSrmE1VRVWqxBGZA}
+		\end{minipage}
+	\end{frame}
+	
+\end{document}
