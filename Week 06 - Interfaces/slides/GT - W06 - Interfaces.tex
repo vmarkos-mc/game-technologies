@@ -105,7 +105,7 @@
 	
 	\begin{frame}{Simultaneous Inheritance}
 		\begin{minipage}{0.65\textwidth}
-			\begin{itemize}
+			\begin{itemize}[<+->]
 				\item We have seen the example of an Animal class, with two child classes: Cat and Dog.
 				\item Being a cat parent since forever, I consider cats to be valid instances of housemates -- even if they do not contribute to housekeeping matters at all.
 				\item So, in my mind, Cats should also inherit from a ``Housemate'' class, as shown in the diagram on the side.
@@ -124,9 +124,9 @@
 	
 	
 	\begin{frame}{Simultaneous Inheritance in C\#}
-		\begin{itemize}
+		\begin{itemize}[<+->]
 			\item The catch is: Simultaneous inheritance in C\# is not a thing.
-			\begin{itemize}
+			\begin{itemize}[<+->]
 				\item This is also a trend in other OO languages like Java.
 			\end{itemize}
 			\item So, how are we going to implement such cases?
@@ -136,11 +136,32 @@
 	\end{frame}
 	
 	\begin{frame}{C\# Interfaces}
-		\begin{itemize}
+		\begin{itemize}[<+->]
 			\item One way to implement multiple inheritance in C\# is by using \textbf{Interfaces}.
 			\item Interfaces roughly serve the purpose of blueprints, much like abstract classes, describing what a class implementing that interface should comprise of.
 			\item As blueprints, Interfaces do not implement themselves any sort of functionality.
 			\item Instead, this is left to each class implementing the interface separately to do so.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{A Simple Example}
+		\lstinputlisting[language=C++]{../source/Item.cs}
+	\end{frame}
+	
+	\begin{frame}{A Simple Example}
+		\lstinputlisting[language=C++]{../source/Collectible.cs}
+	\end{frame}
+
+	\begin{frame}{A Simple Example}
+		\lstinputlisting[language=C++]{../source/Wand.cs}
+	\end{frame}
+	
+	\begin{frame}{So\ldots}
+		\begin{itemize}[<+->]
+			\item Conceptually, interfaces correspond to simple functionalities / behaviours class instances should expose.
+			\item Much like Python's iterables etc.
+			\item So, we collect those desired behaviours in an abstract blueprint, the interface, and then implement as desired in each class.
+			\item This also has the benefit of working at a more abstract level, much like inheritance allows to.
 		\end{itemize}
 	\end{frame}
 	
