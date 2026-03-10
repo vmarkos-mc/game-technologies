@@ -24,10 +24,26 @@ namespace Game_Lab_01
 
         public Inventory GetInventory() { return inventory; }
 
-        // Update relics counter
-        public void CollectRelic(Artefact artefact)
+        private bool CanCollect(Artefact artefact)
         {
+            if (artefact.GetType() != typeof(Ingredient)) return true;
+            foreach (Equipment equipment in inventory.GetEquipment())
+            {
+                if (equipment is ICollects)
+                {
+                    var collectingEquipment = equipment as ICollects;
+                    if (collectingEquipment.CanCollect((Ingredient)artefact)) return true;
+                }
+            }
+            return false;
+        }
+
+        // Update relics counter
+        public bool CollectRelic(Artefact artefact)
+        {
+            if (!CanCollect(artefact)) return false;
             inventory.Add(artefact);
+            return true;
         }
 
         // Object method that returns player location
