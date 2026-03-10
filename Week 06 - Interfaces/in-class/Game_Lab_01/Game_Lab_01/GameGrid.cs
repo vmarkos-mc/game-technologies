@@ -11,7 +11,7 @@ namespace Game_Lab_01
 		private Player player; // This declares an object of the class Player
         // HashSet is like Python's set.
         private HashSet<GridPoint> visited = new HashSet<GridPoint>();
-        private HashSet<Artefact> relics = new HashSet<Artefact>();
+        private Dictionary<GridPoint, Artefact> relics = new Dictionary<GridPoint, Artefact>();
 
 		// General purpose grid constructor.
 		public GameGrid(int rows, int cols)
@@ -19,7 +19,7 @@ namespace Game_Lab_01
 			this.rows = rows;
 			this.cols = cols;
 			player = new Player(this.rows - 1, 0);
-            relics = GetRandomGridPoints(rows);
+            relics = GetRandomArtefacts(rows);
 		}
            
         // Just a shorthand to create square game grids.
@@ -53,14 +53,16 @@ namespace Game_Lab_01
 		}
 
 
-        private HashSet<Artefact> GetRandomArtefacts(int N)
+        private Dictionary<GridPoint, Artefact> GetRandomArtefacts(int N)
         {
-            HashSet<Artefact> artefacts = new HashSet<Artefact>();
+            Dictionary<GridPoint, Artefact> artefacts = new Dictionary<GridPoint, Artefact>();
             // This is not uniformly random, so we should use something like reservoir sampling here.
+            GridPoint point;
             while (artefacts.Count < N)
             {
-                Artefact artefact = new Artefact(GetRandomGridPoint());
-                artefacts.Add(artefact);
+                point = GetRandomGridPoint();
+                Artefact artefact = new Artefact(point);
+                if (!artefacts.ContainsKey(point)) artefacts.Add(point, artefact);
             }
             return artefacts;
         }
@@ -103,8 +105,7 @@ namespace Game_Lab_01
             }
             player.SetLocation(newPlayerLocation);
             // If there is a relic there, collect it.
-            // TODO: Use a Dict<GridPoint, Artefact> to store relics!
-            if (relics.Contains(new Artefact(newPlayerLocation))) player.CollectRelic();
+            if (relics.ContainsKey(newPlayerLocation)) player.CollectRelic(relics[newPlayerLocation]);
             if (player.GetRelicsCollected() == relics.Count()) return true;
             return false;
             // Debugging

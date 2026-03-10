@@ -22,6 +22,8 @@ namespace Game_Lab_01
             return inventory.Count();
         }
 
+        public Inventory GetInventory() { return inventory; }
+
         // Update relics counter
         public void CollectRelic(Artefact artefact)
         {

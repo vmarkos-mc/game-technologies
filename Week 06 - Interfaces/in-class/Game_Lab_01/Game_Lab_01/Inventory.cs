@@ -10,6 +10,7 @@ namespace Game_Lab_01
         public Inventory(int capacity)
         {
             this.capacity = capacity;
+            items = new HashSet<Artefact>();
         }
 
         // Implement a "default" constructor by falling back to
@@ -43,6 +44,11 @@ namespace Game_Lab_01
         public int Count()
         {
             return items.Count;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("Items Found: {0}", Count());
         }
     }
 }

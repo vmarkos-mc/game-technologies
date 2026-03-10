@@ -43,9 +43,10 @@ namespace Game_Lab_01
                 GameGrid.MoveDirection direction = ParseMoveString();
                 game.MakeMove(direction);
                 Console.WriteLine("\x1b[{0}A\r{1}", size, game);
+                Console.Write("\x1b[{0}A{1}", size, .GetInventory());
             }
             Console.WriteLine("You won in {0} moves!", game.GetNumberOfMoves());
-            Console.ReadLine(); // Just to wait after ending
+            while (Console.ReadKey().KeyChar != 'q') { Console.Write("\rPress 'q' to exit!"); }
         }
 
         public void GetWrap()
