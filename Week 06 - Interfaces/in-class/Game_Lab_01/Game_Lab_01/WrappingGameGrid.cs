@@ -5,7 +5,7 @@ namespace Game_Lab_01
     public class WrappingGameGrid : GameGrid
     {
         // Just a boring square grid constructor
-        public WrappingGameGrid(int rows) : base(rows) { }
+        public WrappingGameGrid(int rows, Player player) : base(rows, player) { }
 
         public override GridPoint GetLeft(GridPoint p)
         {

@@ -7,10 +7,12 @@ namespace Game_Lab_01
         private bool isGameOver;
         private int numberOfMoves;
         private GameGrid grid;
+        private Player player;
 
         public Game(int size, bool wrap)
         {
-            grid = wrap ? new WrappingGameGrid(size) : new GameGrid(size);
+            player = new Player(size - 1, 0);
+            grid = wrap ? new WrappingGameGrid(size, player) : new GameGrid(size, player);
             isGameOver = false;
             numberOfMoves = 0;
         }
@@ -31,5 +33,7 @@ namespace Game_Lab_01
         {
             return grid.ToString();
         }
+
+        public Inventory GetPlayerInventory() { return player.GetInventory(); }
     }
 }

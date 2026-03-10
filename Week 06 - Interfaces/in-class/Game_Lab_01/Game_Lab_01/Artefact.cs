@@ -2,7 +2,7 @@
 
 namespace Game_Lab_01
 {
-    internal class Artefact
+    public class Artefact
     {
         private GridPoint location;
 

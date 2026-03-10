@@ -14,16 +14,16 @@ namespace Game_Lab_01
         private Dictionary<GridPoint, Artefact> relics = new Dictionary<GridPoint, Artefact>();
 
 		// General purpose grid constructor.
-		public GameGrid(int rows, int cols)
+		public GameGrid(int rows, int cols, Player player)
 		{
 			this.rows = rows;
 			this.cols = cols;
-			player = new Player(this.rows - 1, 0);
+			this.player = player;
             relics = GetRandomArtefacts(rows);
 		}
            
         // Just a shorthand to create square game grids.
-		public GameGrid(int rows) : this(rows, rows) { }
+		public GameGrid(int rows, Player player) : this(rows, rows, player) { }
 
         // Get neighbours
         public virtual GridPoint GetLeft(GridPoint p)

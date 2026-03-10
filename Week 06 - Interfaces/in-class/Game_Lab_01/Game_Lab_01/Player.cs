@@ -2,7 +2,7 @@
 
 namespace Game_Lab_01
 {
-    class Player
+    public class Player
     {
         private GridPoint location;
         private Inventory inventory;

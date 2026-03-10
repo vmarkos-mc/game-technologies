@@ -2,7 +2,7 @@
 
 namespace Game_Lab_01
 {
-    internal class Inventory
+    public class Inventory
     {
         private int capacity;
         private HashSet<Artefact> items;

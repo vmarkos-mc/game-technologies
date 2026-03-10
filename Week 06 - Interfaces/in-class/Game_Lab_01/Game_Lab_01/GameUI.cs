@@ -43,7 +43,8 @@ namespace Game_Lab_01
                 GameGrid.MoveDirection direction = ParseMoveString();
                 game.MakeMove(direction);
                 Console.WriteLine("\x1b[{0}A\r{1}", size, game);
-                Console.Write("\x1b[{0}A{1}", size, .GetInventory());
+                // FIXME: Maybe improve alignment
+                Console.Write("\x1b[{0}A\x1b[{1}C{2}\x1b[{0}B", size, 2 * size, game.GetPlayerInventory());
             }
             Console.WriteLine("You won in {0} moves!", game.GetNumberOfMoves());
             while (Console.ReadKey().KeyChar != 'q') { Console.Write("\rPress 'q' to exit!"); }
