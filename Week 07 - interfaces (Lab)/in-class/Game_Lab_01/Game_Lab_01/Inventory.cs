@@ -61,9 +61,45 @@ namespace Game_Lab_01
             return result;
         }
 
+        public Dictionary<Ingredient, int> GetIngredients()
+        {
+            // Returns a collection of all ingredients
+            return items.Where(pair => pair.Key.GetType() == typeof(Ingredient))
+                        .Select((pair) => new KeyValuePair<Ingredient, int>((Ingredient)pair.Key, pair.Value))
+                        .ToDictionary<Ingredient, int>(); // Redundant Generics here, used just for clarity
+        }
+
+        /*
+         * Anonymous Fuctions:
+         * Syntax: <arguments> => <return value>
+         * Remarks:
+         *  - <arguments> is a comma-separated list of valid C# identifiers;
+         *  - <return value> is (typically) a single C# expression.
+         */
+
+        //public Dictionary<Ingredient, int> GetIngredients()
+        //{
+        //    IEnumerable<Ingredient> query = items.Keys.Where(item => item.GetType() == typeof(Ingredient))
+        //                                              .Select((ingredient) => (Ingredient)ingredient );
+        //    Dictionary<Ingredient, int> ingredients = new Dictionary<Ingredient, int>();
+        //    foreach (Ingredient ingredient in query)
+        //    {
+        //        ingredients[ingredient] = items[ingredient];
+        //    }
+        //    return ingredients;
+        //}
+
         public override string ToString()
         {
-            return String.Format("Items Found: {0}", Count());
+            Dictionary<Ingredient, int> ingredients = GetIngredients();
+            HashSet<Equipment> equipment = GetEquipment();
+            string ingredientsString = String.Join("\n", ingredients.Select(
+                pair => String.Format("{0}: {1}", pair.Key.ToString(), pair.Value.ToString())
+            ));
+            string equipmentString = String.Join(", ", equipment.Select(
+                equipment => equipment.ToString()
+            ));
+            return String.Format("Ingredients:\n{0}\n\nEquipment:\n{1}", ingredientsString, equipmentString);
         }
     }
 }

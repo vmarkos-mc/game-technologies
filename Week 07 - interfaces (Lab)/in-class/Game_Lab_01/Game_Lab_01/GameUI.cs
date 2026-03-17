@@ -44,7 +44,9 @@ namespace Game_Lab_01
                 game.MakeMove(direction);
                 Console.WriteLine("\x1b[{0}A\r{1}", size, game);
                 // FIXME: Maybe improve alignment
-                Console.Write("\x1b[{0}A\x1b[{1}C{2}\x1b[{0}B", size, 2 * size, game.GetPlayerInventory());
+                KeyValuePair<string, int> sanitisedInventory = SanitisedInventory();
+                int verticalInventoryOffset = size - sanitisedInventory.Value;
+                Console.Write("\x1b[{0}A\x1b[{1}C{2}\x1b[{3}B", size, 2 * size, sanitisedInventory.Key, verticalInventoryOffset);
             }
             Console.WriteLine("You won in {0} moves!", game.GetNumberOfMoves());
             while (Console.ReadKey().KeyChar != 'q') { Console.Write("\rPress 'q' to exit!"); }
@@ -120,6 +122,16 @@ namespace Game_Lab_01
                 default:
                     throw new ArgumentOutOfRangeException("Invalid move option. Valid ones: 'w', 'a', 's', 'd'.");
             }
+        }
+
+        private KeyValuePair<string, int> SanitisedInventory()
+        {
+            string inventoryString = game.GetPlayerInventory().ToString();
+            int lines = inventoryString.Count(c => c == '\n');
+            string saveCursorPosition = "\x1b[s";
+            string moveCursorSequence = "\x1b[u\x1b[1B\x1b[s";
+            string sanitisedInventoryString = saveCursorPosition + inventoryString.Replace("\n", moveCursorSequence);
+            return new KeyValuePair<string, int>(sanitisedInventoryString, lines);
         }
     }
 }

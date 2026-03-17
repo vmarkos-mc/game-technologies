@@ -21,5 +21,10 @@ namespace Game_Lab_01
         {
             return collectibles.Contains(ingredient.GetIngredientType());
         }
+
+        public override string ToString()
+        {
+            return "Knife"; // Dummy as it gets, but, it works...
+        }
     }
 }
