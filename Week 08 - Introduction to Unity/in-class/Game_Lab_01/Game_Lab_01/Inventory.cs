@@ -12,10 +12,13 @@ namespace Game_Lab_01
         {
             this.capacity = capacity;
             items = new Dictionary<Artefact, int>();
+            Knife knife = new Knife(new GridPoint(0, 0)); // HACK: Just a hack!
+            items.Add(knife, 1);
         }
 
         // Implement a "default" constructor by falling back to
         // the above constructor.
+        // FIXME: Use capacity to check if more things can be carried or not!
         public Inventory() : this(20) { }
 
         public bool Add(Artefact artefact)
@@ -47,7 +50,10 @@ namespace Game_Lab_01
 
         public int Count()
         {
-            return items.Count;
+            return items.Values.Aggregate(
+                0, // Initial value
+                (a, b) => a + b // Aggregator function
+            );
         }
 
         public HashSet<Equipment> GetEquipment()
@@ -55,7 +61,7 @@ namespace Game_Lab_01
             HashSet<Equipment> result = new HashSet<Equipment>();
             foreach (Artefact item in items.Keys)
             {
-                if (item.GetType() == typeof(Equipment))
+                if (item is Equipment)
                     result.Add((Equipment)item);
             }
             return result;
@@ -64,9 +70,19 @@ namespace Game_Lab_01
         public Dictionary<Ingredient, int> GetIngredients()
         {
             // Returns a collection of all ingredients
-            return items.Where(pair => pair.Key.GetType() == typeof(Ingredient))
-                        .Select((pair) => new KeyValuePair<Ingredient, int>((Ingredient)pair.Key, pair.Value))
-                        .ToDictionary<Ingredient, int>(); // Redundant Generics here, used just for clarity
+            return items.Where(pair => pair.Key is Ingredient)
+                     .Select((pair) => new Dictionary<Ingredient, int>() { { pair.Key as Ingredient, pair.Value } })
+                     .Aggregate(
+                        new Dictionary<Ingredient, int>(),
+                        (a, b) =>
+                        {
+                            Ingredient bFirstKey = b.First().Key;
+                            if (a.ContainsKey(bFirstKey))
+                                a[bFirstKey] += b.First().Value;
+                            else
+                                a[bFirstKey] = b.First().Value;
+                            return a;
+                        });
         }
 
         /*
@@ -99,7 +115,7 @@ namespace Game_Lab_01
             string equipmentString = String.Join(", ", equipment.Select(
                 equipment => equipment.ToString()
             ));
-            return String.Format("Ingredients:\n{0}\n\nEquipment:\n{1}", ingredientsString, equipmentString);
+            return String.Format("Ingredients:\n{0}\nEquipment:\n{1}", ingredientsString, equipmentString);
         }
     }
 }

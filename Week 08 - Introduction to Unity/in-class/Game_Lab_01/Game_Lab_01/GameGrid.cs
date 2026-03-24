@@ -5,6 +5,18 @@ namespace Game_Lab_01
 {
 	public class GameGrid
 	{
+        // Class constants
+        // FIXME: Create a configuration file!
+        private readonly Dictionary<Ingredient.IngredientType, int> ingredientsDistribution = new Dictionary<Ingredient.IngredientType, int>
+        {
+            { Ingredient.IngredientType.Spanaki, 3 },
+            { Ingredient.IngredientType.Vrouva, 4 },
+            { Ingredient.IngredientType.Feta, 3},
+            { Ingredient.IngredientType.Seskoulo, 6 },
+            { Ingredient.IngredientType.Anithos, 10 },
+            { Ingredient.IngredientType.Prasso, 4 },
+            { Ingredient.IngredientType.Fyllo, 1 },
+        };
 		// By default, each game grid has two dimensions.
 		internal int rows; // We need those to be visible to child classes
         internal int cols;
@@ -19,7 +31,7 @@ namespace Game_Lab_01
 			this.rows = rows;
 			this.cols = cols;
 			this.player = player;
-            relics = GetRandomArtefacts(rows);
+            relics = GetRandomArtefacts();
 		}
            
         // Just a shorthand to create square game grids.
@@ -53,16 +65,21 @@ namespace Game_Lab_01
 		}
 
 
-        private Dictionary<GridPoint, Artefact> GetRandomArtefacts(int N)
+        private Dictionary<GridPoint, Artefact> GetRandomArtefacts()
         {
             Dictionary<GridPoint, Artefact> artefacts = new Dictionary<GridPoint, Artefact>();
             // This is not uniformly random, so we should use something like reservoir sampling here.
             GridPoint point;
-            while (artefacts.Count < N)
+            foreach (KeyValuePair<Ingredient.IngredientType, int> pair in ingredientsDistribution)
             {
-                point = GetRandomGridPoint();
-                Artefact artefact = new Artefact(point);
-                if (!artefacts.ContainsKey(point)) artefacts.Add(point, artefact);
+                for (int i = 0; i < pair.Value; i++)
+                {
+                    point = GetRandomGridPoint();
+                    while (artefacts.ContainsKey(point))
+                        point = GetRandomGridPoint();
+                    Ingredient ingredient = new Ingredient(point, pair.Key);
+                    artefacts[point] = ingredient;
+                }
             }
             return artefacts;
         }
@@ -106,7 +123,12 @@ namespace Game_Lab_01
             player.SetLocation(newPlayerLocation);
             // If there is a relic there, collect it.
             // TODO: Use .CollectRelic return value to inform player about whether the relic has been collected or not
-            if (relics.ContainsKey(newPlayerLocation)) player.CollectRelic(relics[newPlayerLocation]);
+            if (relics.ContainsKey(newPlayerLocation))
+            {
+                //Console.WriteLine("Collecting: {0}", relics[newPlayerLocation]);
+                player.CollectRelic(relics[newPlayerLocation]);
+                //Console.WriteLine("Collected: {0}", relics[newPlayerLocation]);
+            }
             if (player.GetRelicsCollected() == relics.Count()) return true;
             return false;
             // Debugging

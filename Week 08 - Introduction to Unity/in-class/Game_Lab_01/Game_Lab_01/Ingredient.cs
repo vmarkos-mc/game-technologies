@@ -21,8 +21,7 @@ namespace Game_Lab_01
 
         public override bool Equals(object? obj)
         {
-            if (!base.Equals(obj)) return false;
-            if (obj.GetType() != typeof(Ingredient)) return false;
+            if (!(obj is Ingredient)) return false;
             Ingredient other = (Ingredient) obj; // Safe to cast
             // `other.type` is visible since we are inside the Ingredient class
             return this.type == other.type;
@@ -30,7 +29,7 @@ namespace Game_Lab_01
 
         public override int GetHashCode()
         {
-            return base.GetHashCode() ^ type.GetHashCode();
+            return type.GetHashCode();
         }
 
         public override string ToString()

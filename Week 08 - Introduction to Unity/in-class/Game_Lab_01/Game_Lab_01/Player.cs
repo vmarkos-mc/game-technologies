@@ -19,16 +19,19 @@ namespace Game_Lab_01
         // Relics setters / getters
         public int GetRelicsCollected()
         {
-            return inventory.Count();
+            return inventory.Count() - 1; // HACK: Magic number `-1`
         }
 
         public Inventory GetInventory() { return inventory; }
 
         private bool CanCollect(Artefact artefact)
         {
+            //Console.WriteLine("                                           Checking if I can collect");
             if (artefact.GetType() != typeof(Ingredient)) return true;
+            //Console.Write("                                     Collecting Ingredient");
             foreach (Equipment equipment in inventory.GetEquipment())
             {
+                //Console.Write("                               Collecting with: {0}", equipment);
                 if (equipment is ICollects)
                 {
                     var collectingEquipment = equipment as ICollects;
