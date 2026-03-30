@@ -1,0 +1,171 @@
+% !TeX spellcheck = en_GB
+\documentclass[a4paper, 11pt]{article}
+\usepackage{layouts} % Feel free to remove this one
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[backend=biber, sortcites, citestyle=numeric]{biblatex}
+\usepackage[tt=false]{libertine}
+\usepackage{libertinust1math}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage[top=1in, bottom=1in, left=1.6in, right=1.6in]{geometry}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{siunitx-v2}
+\usepackage{subcaption}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\usepackage[colorlinks, linkcolor=black]{hyperref}
+
+\addbibresource{references.bib}
+
+\numberwithin{equation}{section}
+
+\DeclareCaptionFormat{custom}
+{%
+	{\sf\footnotesize\textbf{#1#2}{#3}}
+}
+\captionsetup{format=custom}
+
+% Margin paragraphs
+\let\oldmarginpar\marginpar
+\setlength\marginparwidth{3cm}
+\renewcommand{\marginpar}[1]{\oldmarginpar{\flushleft\tiny\sf{#1}}}
+
+% Colors
+\definecolor{primary}{HTML}{5080da}
+\definecolor{secondary}{HTML}{da8050}
+
+% tikz definitions
+\tikzset{leaf node/.style = {rectangle, draw=black, minimum width = 0.5cm, minimum height = 0.5cm}}
+\tikzset{internal node/.style = {circle, draw=black, minimum width = 0.5cm}}
+
+% Theorems
+\newtcbtheorem{definition}{Definition}{colback=primary!5, colframe=primary, fonttitle=\bfseries}{def}
+\newtcbtheorem{alert}{Alert}{colback=secondary!5, colframe=secondary, fonttitle=\bfseries}{alert}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[section]
+
+% Code listings
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Custom commands
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\hint}{\textit{Hint:}~}
+\newcommand{\inlcd}[1]{\lstinline[language=Python]{#1}}
+
+% inline code blocks
+\newcommand\mystrut{\rule[-1pt]{0pt}{.8em}}
+
+\newtcbox{\code}{on line, boxrule=0pt, boxsep=0pt, top=2pt,
+left=2pt, bottom=2pt, right=2pt, colback=gray!25, colframe=white,
+fontupper={\ttfamily\mystrut}}
+
+% Colors
+\definecolor{primary}{HTML}{5080da}
+
+% Theorems
+\newtcbtheorem{task}{Task}{colback=primary!5,colframe=primary,fonttitle=\bfseries}{task}
+
+% Custom commands
+\newcommand{\player}{\texttt{p}}
+\newcommand{\fow}{\texttt{*}}
+
+%%% Local macros
+\newcommand{\caret}{\,^\wedge\,}
+
+\title{Game Design Lab 03: Interfaces}
+\author{V. Markos\\Mediterranean College}
+\date{Spring, 2025 -- 2026, Week 06}
+
+\begin{document}
+%
+\maketitle
+%
+\begin{abstract}
+    What is this? Probably an ongoing lab for this course, where you will create simple game in Python. Do not expect spectacular graphics and all that stuff, since this course is not about that, but expect to encounter and attack several data structures and algorithm--related problems as we go into more sophisticate designs for our game. Stay tuned for more\ldots
+\end{abstract}
+%
+%
+%
+\section{Introduction (Or Some First Comments)}
+%
+Before we actually start with this lab series, some rough comments on what to expect (and what not to) from this lab:
+\begin{itemize}
+    \item This is \textbf{not an introduction to games design.}
+    \item This is, and should be treated as such, \textbf{an introduction to Python programming} and, especially, getting our hands dirty with some actual code, other than converting temperatures, checking primality and all that stuff we see in lab exercises.
+    \item I do not have a full idea of the final version of the game, yet. And, probably, I will not have until Week 12. Many of the features will be decided on the spot, by you and me, as we discuss in class.
+    \item However, I do have a plan on what this game will assess, in terms of data structures and relevant algorithms. Consequently, there are certain features that I have already decided to include.
+    \item However (vol.~2), I also have a certain rough plan for the abstract game outline. There will be a simple game grid, initially covered by a Fog of War, and you will have a player exploring the grid while having to avoid computer--controlled enemies and find some relics which will be collectible and stuff like that --- we will further specify features together throughout the next weeks.
+\end{itemize}
+%
+%
+%
+\section{Artefacts}
+%
+Last week we designed a quite abstract artefact clas, with the aim of capturing all sort of things that one might be able to collect while playing our game. However, we have some minor issues to address first:
+
+\begin{task}{Code Refactoring}{task01}
+    Last time, due to lack of time, we did not completely transition to using \code{Artefact} instead of \code{GridPoint}. So, make any remaining changes to ensure things do work using \code{Artefact}s.
+\end{task}
+
+So far, artefacts are just a thin wrapper around the good old grid points we used to represent our monolithic relics. However, we shall distinguish soon between various artefact types. To begin with, there will be artefacts that will be used to craft our game's ultimate goal; a pitta. Besides that, there will also be artefacts that will be used to craft better collecting equipment, like a sharper higher level knife and so on. So\ldots
+
+\begin{task}{Artefact Kinds}{task02}
+    Having implemnted the parent class \code{Artefact}, we can now create separate child classes for the various types of artefacts we would like to represent. One might include pitta ingredients, another might be related to equipment, and so on. So, create appropriate child classes to capture all those different kinds of artefacts, taking advantage of inheritance features offered by C\#.
+\end{task}
+%
+%
+%
+\section{Inventory}
+%
+We have yet to implement the \code{Inventory} class using \code{Artefact}s and making any required adjustments. So:
+\begin{task}{Inventory Refactoring}{task03}
+    Appropriately refactor the \code{Inventory} class code so as to properly reflect changes / modifications in the inventory class. Utilise polymorphism to allow for a more dynamic behaviour across the various \code{Artefact} child classes.
+\end{task}
+
+Now, what's next? Of course, more refactoring, since Inventories are also used in some place in our codebase. So:
+
+\begin{task}{Further Reafactoring}{task04}
+    Revisit the usage of \code{Inventory} in \code{Player} class and wherever we might have used it so far and make sure it is alligned with the new changes made.
+\end{task}
+
+\section{Interfaces}
+%
+Artefacts might have different uses, even if they inherit from the same parent class. Moreover, we might want to ensure that any future updates do not break any existing functionalities and also respect a general scheme we might want to use for our game. This is exactly the case where interfaces come in handy! So:
+
+\begin{task}{Interfaces}{task05}
+    Define interfaces for objects that will be used in crafting, such as pitta ingredients, e.g., \code{Craftable}, and any other interfaces that will determine how certain artefact types will interact with the rest of our game's universe. Then, use those interfaces in the various artefact child classes already implemetned.
+\end{task}
+%
+%
+%
+\end{document}
