@@ -89,6 +89,24 @@ namespace Game_Lab_01
                         });
         }
 
+        public Dictionary<Ingredient, int> EmptyIngredients()
+        {
+            Dictionary<Ingredient, int> ingredients = GetIngredients();
+            this.items = this.items.Where(pair => !(pair.Key is Ingredient))
+                        .Aggregate(
+                            new Dictionary<Artefact, int>(),
+                            (a, b) =>
+                            {
+                                if (a.ContainsKey(b.Key))
+                                    a[b.Key] += b.Value;
+                                else
+                                    a[b.Key] = b.Value;
+                                return a;
+                            }
+                        );
+            return ingredients;
+        }
+
         /*
          * Anonymous Fuctions:
          * Syntax: <arguments> => <return value>

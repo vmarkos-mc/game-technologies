@@ -22,6 +22,7 @@ namespace Game_Lab_01
         internal int cols;
 		private Player player; // This declares an object of the class Player
         // HashSet is like Python's set.
+        private Warehouse warehouse;
         private HashSet<GridPoint> visited = new HashSet<GridPoint>();
         private Dictionary<GridPoint, Artefact> relics = new Dictionary<GridPoint, Artefact>();
 
@@ -32,10 +33,21 @@ namespace Game_Lab_01
 			this.cols = cols;
 			this.player = player;
             relics = GetRandomArtefacts();
+            PlaceWarehouse();
 		}
            
         // Just a shorthand to create square game grids.
 		public GameGrid(int rows, Player player) : this(rows, rows, player) { }
+
+        private void PlaceWarehouse()
+        {
+            // Get a random point and, while there is an artefact on it, repeat
+            GridPoint point = GetRandomGridPoint();
+            while (relics.ContainsKey(point))
+                point = GetRandomGridPoint();
+            // FIXME: What if we stumble upon the player's initial position?
+            warehouse = new Warehouse(point);
+        }
 
         // Get neighbours
         public virtual GridPoint GetLeft(GridPoint p)
@@ -132,6 +144,14 @@ namespace Game_Lab_01
                 if (!collected) Utils.Log("Relic not collected. Inventory full!");
                 //Console.WriteLine("Collected: {0}", relics[newPlayerLocation]);
             }
+            if (warehouse.IsAt(newPlayerLocation))
+            {
+                Dictionary<Ingredient, int> ingredients = player.EmptyIngredients();
+                warehouse.Dump(ingredients);
+                // as a one-liner
+                // warehouse.Dump(player.EmptyIngredients());
+            }
+            // FIXME: Update according to new game over logic
             if (player.GetRelicsCollected() == relics.Count) return true;
             return false;
             // Debugging
@@ -154,7 +174,12 @@ namespace Game_Lab_01
 					if (player.IsAt(i, j))
 					{
 						gridString += $"{player} ";
-					} else if (visited.Contains(new GridPoint(i, j)))
+					}
+                    else if (warehouse.IsAt(i, j))
+                    {
+                        gridString += $"{warehouse} ";
+                    } 
+                    else if (visited.Contains(new GridPoint(i, j)))
                     {
                         gridString += ". "; // This means we have visited this cell
                     }

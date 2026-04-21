@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game_Lab_01
 {
@@ -20,6 +21,11 @@ namespace Game_Lab_01
         public int GetRelicsCollected()
         {
             return inventory.Count() - 1; // HACK: Magic number `-1`
+        }
+
+        public Dictionary<Ingredient, int> EmptyIngredients()
+        {
+            return this.inventory.EmptyIngredients();
         }
 
         public Inventory GetInventory() { return inventory; }
