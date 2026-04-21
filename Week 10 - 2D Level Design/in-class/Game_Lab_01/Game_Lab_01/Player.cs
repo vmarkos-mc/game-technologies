@@ -45,7 +45,8 @@ namespace Game_Lab_01
         public bool CollectRelic(Artefact artefact)
         {
             if (!CanCollect(artefact)) return false;
-            inventory.Add(artefact);
+            bool isfull = inventory.Add(artefact);
+            // if (isfull) throw new Exception();
             return true;
         }
 

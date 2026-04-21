@@ -21,7 +21,7 @@ namespace Game_Lab_01
         // Implement a "default" constructor by falling back to
         // the above constructor.
         // FIXME: Use capacity to check if more things can be carried or not!
-        public Inventory() : this(20) { }
+        public Inventory() : this(10) { }
 
         public bool Add(Artefact artefact)
         {
@@ -42,20 +42,22 @@ namespace Game_Lab_01
 
         public bool IsFull()
         {
-            return items.Count == capacity;
+            return this.Count() == this.capacity;
         }
 
         public bool IsEmpty()
         {
-            return items.Count == 0;
+            return this.Count() == 0;
         }
 
         public int Count()
         {
-            return items.Values.Aggregate(
+            int count = items.Values.Aggregate(
                 0, // Initial value
                 (a, b) => a + b // Aggregator function
             );
+            // Utils.Log("" + count);
+            return count;
         }
 
         public HashSet<Equipment> GetEquipment()

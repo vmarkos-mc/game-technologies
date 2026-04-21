@@ -123,10 +123,13 @@ namespace Game_Lab_01
             player.SetLocation(newPlayerLocation);
             // If there is a relic there, collect it.
             // TODO: Use .CollectRelic return value to inform player about whether the relic has been collected or not
+            bool collected;
             if (relics.ContainsKey(newPlayerLocation))
             {
                 //Console.WriteLine("Collecting: {0}", relics[newPlayerLocation]);
-                player.CollectRelic(relics[newPlayerLocation]);
+                collected = player.CollectRelic(relics[newPlayerLocation]);
+                // HACK: This should be treated using a signal in unity.
+                if (!collected) Utils.Log("Relic not collected. Inventory full!");
                 //Console.WriteLine("Collected: {0}", relics[newPlayerLocation]);
             }
             if (player.GetRelicsCollected() == relics.Count) return true;
